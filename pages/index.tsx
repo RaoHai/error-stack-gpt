@@ -1,6 +1,5 @@
 import { GeistProvider, CssBaseline, Page, Text } from '@geist-ui/core'
 
-import { Chat } from '../components/Chat'
 import ErrorStackInput from '../components/ErrorStackInput'
 
 function Home() {

@@ -95,7 +95,7 @@ export default function ErrorStackInput() {
         
         <Grid xs={12}>
           <Display width="100%" caption="Explain from chatGPT">
-            <Code block>{response}</Code>
+            <Code block style={{ whiteSpace: 'break-spaces' }}>{response}</Code>
           </Display>
         </Grid>
 

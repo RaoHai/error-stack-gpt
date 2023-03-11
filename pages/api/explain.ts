@@ -15,7 +15,7 @@ const handler = async (req: Request): Promise<Response> => {
   const body = await req.json(); 
   const messages: ChatGPTMessage[] = [{
       role: 'user',
-      content: 'Explain this javascript message in brief and simple terms:',
+      content: 'Explain this typescript error message and send me solution sample code.',
   }];
 
   messages.push(...body?.messages);
