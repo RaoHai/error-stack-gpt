@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@geist-ui/core": "^2.3.8",
     "@vercel/analytics": "^0.1.6",
     "@vercel/examples-ui": "^1.0.4",
     "eventsource-parser": "^0.1.0",
