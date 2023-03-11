@@ -43,7 +43,7 @@ const handler = async (req: Request): Promise<Response> => {
     user: body?.user,
     n: 1,
   }
-
+  console.log('payload', payload);
   const stream = await OpenAIStream(payload)
   return new Response(stream)
 }

@@ -44,7 +44,7 @@ export default function ErrorStackInput() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        messages: errorStack,
+        messages: [{ role: 'user', content: errorStack }],
         user: cookie[COOKIE_NAME],
       }),
     })
