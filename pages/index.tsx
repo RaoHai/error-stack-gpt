@@ -9,7 +9,7 @@ function Home() {
       <Page>
         <Text h1>Error Stack GPT</Text>
         <Text>
-          Paste errro stack and get solution.
+          Paste error stack and get solution.
         </Text>
 
         <ErrorStackInput />

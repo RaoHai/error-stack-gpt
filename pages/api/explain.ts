@@ -6,25 +6,29 @@ export interface ChatGPTMessage {
     role: ChatGPTAgent
     content: string
 }
-  
+
 export const config = {
   runtime: 'edge',
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  const body = await req.json(); 
+  const body = await req.json();
+  const { messages: bodyMessages, language = 'javascript' } = body;
+
   const messages: ChatGPTMessage[] = [{
       role: 'user',
-      content: 'Explain this typescript error message and send me solution sample code.',
+      content: `
+        I want you to act as a code improver. Base on a ${language} error message and error stack, send me resolution sample code.
+      `,
   }];
 
-  messages.push(...body?.messages);
+  messages.push(...bodyMessages);
 
   const requestHeaders: Record<string, string> = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
   }
-  
+
   if (process.env.OPENAI_API_ORG) {
     requestHeaders['OpenAI-Organization'] = process.env.OPENAI_API_ORG
   }

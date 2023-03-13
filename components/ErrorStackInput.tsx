@@ -1,4 +1,4 @@
-import { Button, Card, Code, Display, Grid, Textarea } from "@geist-ui/core";
+import { Button, Card, Code, Display, Grid, Loading, Select, Spacer, Textarea } from "@geist-ui/core";
 import { useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
@@ -7,6 +7,7 @@ const COOKIE_NAME = 'error-stack-user'
 export default function ErrorStackInput() {
   const [loading, setLoading] = useState(false)
   const [cookie, setCookie] = useCookies([COOKIE_NAME])
+  const [language, setLanguage] = useState('javascript')
 
   useEffect(() => {
     if (!cookie[COOKIE_NAME]) {
@@ -18,11 +19,11 @@ export default function ErrorStackInput() {
 
   const [errorStack, setErrorStack] = useState(`
     ./components/ErrorStackInput.tsx
-    Error: 
+    Error:
       x Unexpected token \`,\`. Expected identifier, string literal, numeric literal or [ for the computed key
         ,-[X:\code\error-stack-gpt\components\ErrorStackInput.tsx:1:1]
       1 | import { Textarea } from "@geist-ui/core";
-      2 | 
+      2 |
       3 | export default function ErrorStackInput() {
       4 |     let a = {,};
         :              ^
@@ -30,7 +31,7 @@ export default function ErrorStackInput() {
       6 |         <Textarea style={{ width: 400, height: 240 }} />
       6 |     );
         \`----
-    
+
     Caused by:
         Syntax Error
   `);
@@ -44,6 +45,7 @@ export default function ErrorStackInput() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        language,
         messages: [{ role: 'user', content: errorStack }],
         user: cookie[COOKIE_NAME],
       }),
@@ -77,7 +79,7 @@ export default function ErrorStackInput() {
 
     setResponse(lastMessage);
 
-  }, [errorStack]);
+  }, [errorStack, language]);
 
   return (
     <>
@@ -86,20 +88,25 @@ export default function ErrorStackInput() {
           <Card shadow width="100%" >
             <Textarea
               width="100%"
-              style={{ height: 240 }}
+              style={{ minHeight: 240 }}
               value={errorStack}
               onChange={e => setErrorStack(e.target.value)}
             />
           </Card>
         </Grid>
-        
+
         <Grid xs={12}>
           <Display width="100%" caption="Explain from chatGPT">
-            <Code block style={{ whiteSpace: 'break-spaces' }}>{response}</Code>
+            {loading ? <Loading /> : <Code block style={{ whiteSpace: 'break-spaces' }}>{response}</Code>}
           </Display>
         </Grid>
 
         <Grid xs={24}>
+          <Select value={language} onChange={value => setLanguage(value)}>
+            <Select.Option value="javascript">javascript</Select.Option>
+            <Select.Option value="typescript">typescript</Select.Option>
+          </Select>
+          <Spacer w={5}/>
           <Button onClick={sendMessage}>
             Ask
           </Button>
@@ -107,4 +114,4 @@ export default function ErrorStackInput() {
       </Grid.Container>
     </>
   );
-}   
+}
