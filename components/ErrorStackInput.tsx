@@ -102,7 +102,7 @@ export default function ErrorStackInput() {
         </Grid>
 
         <Grid xs={24}>
-          <Select value={language} onChange={value => setLanguage(value)}>
+          <Select value={language} onChange={value => setLanguage(value as string)}>
             <Select.Option value="javascript">javascript</Select.Option>
             <Select.Option value="typescript">typescript</Select.Option>
           </Select>
